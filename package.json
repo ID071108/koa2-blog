@@ -1,0 +1,31 @@
+{
+  "name": "koa2-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ID071108/koa2-blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ID071108/koa2-blog/issues"
+  },
+  "homepage": "https://github.com/ID071108/koa2-blog#readme",
+  "dependencies": {
+    "ejs": "^2.6.1",
+    "koa": "^2.6.2",
+    "koa-bodyparser": "^4.2.1",
+    "koa-logger": "^3.2.0",
+    "koa-router": "^7.4.0",
+    "koa-static": "^5.0.0",
+    "koa-views": "^6.1.5",
+    "mysql": "^2.16.0"
+  }
+}

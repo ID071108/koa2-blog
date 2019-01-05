@@ -1,0 +1,21 @@
+.home {
+  padding: 70px 0 0 0;
+}
+.navbar-brand > img {
+  width: 20px;
+  height: 20px;
+}
+.home .modal-content {
+  padding: 20px;
+}
+.login-form .login-btn {
+  text-align: right;
+}
+
+.home .alert {
+  display: none;
+}
+
+.userInfo-modal .btn--save {
+  display: none;
+}

@@ -1,0 +1,172 @@
+<%- include("header",{url: 'home'}) %>
+<!-- nav start -->
+<div class="home container">
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          <img alt="Brand" src="/images/logo.png" />
+        </a>
+        <p class="navbar-text">
+          <strong>get busy living or get busy dying</strong>
+        </p>
+      </div>
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="please input keyword" />
+        </div>
+        <button type="submit" class="btn btn-default">search</button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li>
+          <a href="#" role="button">写博客</a>
+        </li>
+        <li>
+          <a
+            href="#"
+            class="dropdown-toggle"
+            data-toggle="dropdown"
+            role="button"
+            aria-haspopup="true"
+            aria-expanded="false">
+            <span class="user-name"></span>
+            <span class="caret"></span>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="li--userInfo"><a href="#">个人信息</a></li>
+            <li role="separator" class="divider"></li>
+            <li class="li--login"><a href="#">登陆</a></li>
+            <li class="li--signin"><a href="#">注册</a></li>
+            <li class="li--exit"><a href="#">退出</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- nav end -->
+
+  <!-- content start -->
+  <% if(articles.length > 0 ){ %> 
+    <% articles.forEach(function(article){ %>
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= article.title %></h3>
+      </div>
+      <div class="panel-body"><%= article.desc %></div>
+      <div class="panel-footer"> <%= article.date %> <%= article.tag %> </div>
+    </div>
+    <% }) %> 
+  <% } %>
+  <!-- content start -->
+
+  <!-- pagination start -->
+  <nav aria-label="Page navigation">
+    <ul class="pagination">
+      <li>
+        <a href="#" aria-label="Previous">
+          <span aria-hidden="true">&laquo;</span>
+        </a>
+      </li>
+      <li><a href="#">1</a></li>
+      <li><a href="#">2</a></li>
+      <li><a href="#">3</a></li>
+      <li><a href="#">4</a></li>
+      <li><a href="#">5</a></li>
+      <li>
+        <a href="#" aria-label="Next">
+          <span aria-hidden="true">&raquo;</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <!-- nav start -->
+
+  <!-- login modal start -->
+  <div class="modal fade login-modal" tabindex="-1" role="dialog" aria-labelledby="myLoginModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="gridSystemModalLabel">登陆</h4>
+        </div>
+        <div class="modal-body">
+          <form class="login-form">
+            <div class="form-group has-error">
+              <label for="account">帐号</label>
+              <input type="text" class="form-control has-error" id="account" name="account">
+            </div>
+            <div class="form-group has-error">
+              <label for="password">密码</label>
+              <input type="password" class="form-control" id="password" name="password">
+            </div>
+            <div class="form-group">
+              <!-- alert start -->
+              <div class="alert alert-danger">
+                <button type="button" class="close" " aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <span>萨达撒旦法第三方</span>
+              </div>
+              <!-- alert end -->
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button type="button" class="btn btn-primary">确认</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- login modal end -->
+
+  <!-- userInfo modal start -->
+  <div class="modal fade userInfo-modal" tabindex="-1" role="dialog" aria-labelledby="myUserInfoModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="gridSystemModalLabel">个人信息</h4>
+        </div>
+        <div class="modal-body">
+          <form class="userInfo-form form-horizontal">
+            <div class="form-group">
+              <label>ID</label>
+              <input type="text" class="form-control" name="id" disabled />
+            </div>
+            <div class="form-group">
+              <label>昵称</label>
+              <input type="text" class="form-control" name="nickname" disabled />
+            </div>
+            <div class="form-group">
+              <label>帐号</label>
+              <input type="text" class="form-control" name="account" disabled />
+            </div>
+            <div class="form-group">
+              <label>性别</label>
+              <input type="text" class="form-control" name="sex" disabled />
+            </div>
+            <div class="form-group">
+              <label>个性签名</label>
+              <input type="text" class="form-control" name="slogan" disabled />
+            </div>
+            <div class="form-group">
+              <label>邮箱</label>
+              <input type="text" class="form-control" name="email" disabled />
+            </div>
+            <div class="form-group">
+              <label>职业</label>
+              <input type="text" class="form-control" name="profession" disabled />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn--edit">编辑</button>
+          <button type="button" class="btn btn-info btn--save">保存</button>
+          <button type="button" class="btn btn-default btn--close" data-dismiss="modal">关闭</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- userInfo modal end -->
+  
+</div>
+<%- include("footer",{url: 'home'}) %>
