@@ -20,12 +20,18 @@ const Home = {
   $userInfoNickName: null,
   $userInfoAccount: null,
   $userInfoPwd: null,
-  $userInfoSex: null,
+  $userInfoMale: null,
+  $userInfoFemale: null,
   $userInfoEdit: null,
   $userInfoSlogan: null,
   $userInfoProfession: null,
   $userInfoNickName: null,
   $btnEdit: null,
+  // signin
+  $signinModal: null,
+  $signinForm: null,
+  $signinBtnSave: null,
+  $signinBtnClose: null,
   userInfo: null,
   init() {
     /** storage curr page dom */
@@ -41,17 +47,24 @@ const Home = {
     this.$formGroup = $('.login-form .form-group')
     this.$userName = $('.user-name')
     // userinfo dom
+    let _sexRadio = $('.userInfo-form input[name="sex"]')
     this.$userInfoID = $('.userInfo-form input[name="id"]')
     this.$userInfoNickName = $('.userInfo-form input[name="nickname"]')
     this.$userInfoAccount = $('.userInfo-form input[name="account"]')
     this.$userInfoPwd = $('.userInfo-form input[name="password"]')
-    this.$userInfoSex = $('.userInfo-form input[name="sex"]')
+    this.$userInfoMale = $(_sexRadio[0])
+    this.$userInfoFemale = $(_sexRadio[1])
     this.$userInfoEdit = $('.userInfo-form input[name="email"]')
     this.$userInfoSlogan = $('.userInfo-form input[name="slogan"]')
     this.$userInfoProfession = $('.userInfo-form input[name="profession"]')
     this.$btnEdit = $('.userInfo-modal .btn--edit')
     this.$btnSave = $('.userInfo-modal .btn--save')
     this.userInfo = SessionStorage.getSession('userInfo')
+    // signin modal dom
+    this.$signinModal = $('.signin-modal')
+    this.$signinForm = $('.signin-form')
+    this.$signinBtnSave = $('.signin-modal .btn--save')
+    this.$signinBtnClose = $('.signin-modal .btn--close')
     /** initial event */
     // login event
     this.handleShowLogin()
@@ -63,6 +76,8 @@ const Home = {
     this.handleShowUserInfo()
     this.handleEditUserInfo()
     this.handleSaveUserInfo()
+    // signin event
+    this.handleSignin()
   },
   getUserInfo() {
     if (this.userInfo && this.userInfo.nickname) {
@@ -79,6 +94,7 @@ const Home = {
       this.$liExit.hide()
     }
   },
+  postUserInfo() {},
   handleEditUserInfo() {
     this.$btnEdit.click(() => {
       this.handleSetUserInfoDisabled(false)
@@ -90,7 +106,8 @@ const Home = {
     this.$userInfoNickName.prop('disabled', bool)
     this.$userInfoAccount.prop('disabled', bool)
     this.$userInfoPwd.prop('disabled', bool)
-    this.$userInfoSex.prop('disabled', bool)
+    this.$userInfoMale.prop('disabled', bool)
+    this.$userInfoFemale.prop('disabled', bool)
     this.$userInfoEdit.prop('disabled', bool)
     this.$userInfoSlogan.prop('disabled', bool)
     this.$userInfoProfession.prop('disabled', bool)
@@ -105,11 +122,13 @@ const Home = {
   handleShowUserInfo() {
     this.$liUserInfo.click(() => {
       if (this.userInfo) {
+        let _sexBool = !!this.userInfo.sex
         this.$userInfoID.val(this.userInfo.id)
         this.$userInfoNickName.val(this.userInfo.nickname)
         this.$userInfoAccount.val(this.userInfo.account)
         this.$userInfoPwd.val(this.userInfo.password)
-        this.$userInfoSex.val(this.userInfo.sex)
+        this.$userInfoMale.prop('checked', _sexBool)
+        this.$userInfoFemale.prop('checked', !_sexBool)
         this.$userInfoEdit.val(this.userInfo.email)
         this.$userInfoSlogan.val(this.userInfo.slogan)
         this.$userInfoProfession.val(this.userInfo.profession)
@@ -185,6 +204,22 @@ const Home = {
     this.$liExit.click(e => {
       SessionStorage.removeSession('userInfo')
       window.location.reload()
+    })
+  },
+  handleSignin() {
+    this.$liSignin.on('click', () => this.$signinModal.modal('show'))
+    this.$signinBtnClose.on('click', () => this.$signinModal.modal('hide'))
+    this.$signinBtnSave.on('click', () => {
+      let formObj = this.$signinForm.serializeObject()
+      console.log(formObj)
+      $.ajax({
+        url: '/signin',
+        type: 'POST',
+        data: formObj,
+        dataType: 'json',
+        success: () => {},
+        error: () => {}
+      })
     })
   }
 }

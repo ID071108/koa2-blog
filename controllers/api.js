@@ -21,5 +21,16 @@ module.exports = {
       }
       ctx.response.body = _res
     })
+  },
+  signin: async ctx => {
+    await user.signin(ctx.request.body).then(res => {
+      console.log(!!res, 10001)
+      let _res = {
+        result: !!res,
+        code: 200,
+        msg: '请求成功'
+      }
+      return _res
+    })
   }
 }

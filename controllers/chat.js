@@ -11,7 +11,7 @@ module.exports = async function(ctx, next) {
     .then(async res => {
       let _count = res.count[0]['COUNT(*)']
       _count = Math.ceil(_count % 10)
-      await ctx.render('home', {
+      await ctx.render('chat', {
         articles: res.articles,
         count: _count
       })

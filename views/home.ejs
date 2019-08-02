@@ -1,4 +1,4 @@
-<%- include("header",{url: 'home'}) %>
+<%- include("header",{styles: ['/styles/home']}) %>
 <!-- nav start -->
 <div class="home container">
   <nav class="navbar navbar-default navbar-fixed-top">
@@ -8,18 +8,21 @@
           <img alt="Brand" src="/images/logo.png" />
         </a>
         <p class="navbar-text">
-          <strong>get busy living or get busy dying</strong>
+          <strong>get busy living or get busy dying </strong>
         </p>
       </div>
       <form class="navbar-form navbar-left">
         <div class="form-group">
-          <input type="text" class="form-control" placeholder="please input keyword" />
+          <input type="text" class="form-control" placeholder="请输入关键字进行搜索" />
         </div>
-        <button type="submit" class="btn btn-default">search</button>
+        <button type="submit" class="btn btn-default"><i class="icon-search"></i>search</button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li>
-          <a href="#" role="button">写博客</a>
+        <li class="chat">
+          <a href="/chat" role="button"><i class="icon-bell"></i>聊天室</a>
+        </li>
+        <li class="blog">
+          <a href="/blogging" role="button"><i class="icon-edit"></i>写博客</a>
         </li>
         <li>
           <a
@@ -29,7 +32,8 @@
             role="button"
             aria-haspopup="true"
             aria-expanded="false">
-            <span class="user-name"></span>
+            <i class="icon-user"></i>
+            <span class="user-name">admin</span>
             <span class="caret"></span>
           </a>
           <ul class="dropdown-menu">
@@ -50,7 +54,8 @@
     <% articles.forEach(function(article){ %>
     <div class="panel panel-info">
       <div class="panel-heading">
-        <h3 class="panel-title"><%= article.title %></h3>
+        <h3 class="panel-title pull-left"><%= article.title %></h3>
+        <a class="pull-right" href="#">阅读全文</a>
       </div>
       <div class="panel-body"><%= article.desc %></div>
       <div class="panel-footer"> <%= article.date %> <%= article.tag %> </div>
@@ -60,25 +65,27 @@
   <!-- content start -->
 
   <!-- pagination start -->
-  <nav aria-label="Page navigation">
-    <ul class="pagination">
-      <li>
-        <a href="#" aria-label="Previous">
-          <span aria-hidden="true">&laquo;</span>
-        </a>
-      </li>
-      <li><a href="#">1</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="#">5</a></li>
-      <li>
-        <a href="#" aria-label="Next">
-          <span aria-hidden="true">&raquo;</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+  <% if(count && count > 0 ){ %> 
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li>
+          <a href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <% for(let i=0; i<count; i++) { %>
+          <li>
+            <a href="/home?pageSize=<%= 10 %>&pageCurrent=<%= i+1 %>"><%= i+1 %></a>
+          </li>
+        <% } %>
+        <li>
+          <a href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  <% } %>
   <!-- nav start -->
 
   <!-- login modal start -->
@@ -103,7 +110,7 @@
               <!-- alert start -->
               <div class="alert alert-danger">
                 <button type="button" class="close" " aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <span>萨达撒旦法第三方</span>
+                <span></span>
               </div>
               <!-- alert end -->
             </div>
@@ -141,8 +148,13 @@
               <input type="text" class="form-control" name="account" disabled />
             </div>
             <div class="form-group">
-              <label>性别</label>
-              <input type="text" class="form-control" name="sex" disabled />
+              <label for="sex">性别</label>
+              <label>
+                <input type="radio" name="sex" >male
+              </label>
+              <label>
+                <input type="radio" name="sex"  >female
+              </label>
             </div>
             <div class="form-group">
               <label>个性签名</label>
@@ -160,13 +172,81 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-primary btn--edit">编辑</button>
-          <button type="button" class="btn btn-info btn--save">保存</button>
           <button type="button" class="btn btn-default btn--close" data-dismiss="modal">关闭</button>
+          <button type="button" class="btn btn-info btn--save">保存</button>
         </div>
       </div>
     </div>
   </div>
   <!-- userInfo modal end -->
+
+  <!-- signin  modal start -->
+  <div class="modal fade signin-modal" tabindex="-1" role="dialog" aria-labelledby="mySigninModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="gridSystemModalLabel">个人信息</h4>
+        </div>
+        <div class="modal-body">
+          <form class="signin-form form-horizontal">
+            <div class="form-group required">
+              <label>帐号</label>
+              <input type="text" class="form-control" name="account" />
+              <span style="color: red">123456</span>
+            </div>
+            <div class="form-group">
+              <label>密码</label>
+              <input type="password" class="form-control" name="password" />
+            </div>
+            <div class="form-group">
+              <label>再次输入密码</label>
+              <input type="password" class="form-control" name="re-password"/>
+            </div>
+            <div class="form-group">
+              <label>昵称</label>
+              <input type="text" class="form-control" name="nickname" />
+            </div>
+            <div class="form-group">
+              <label for="sex">性别</label>
+              <label>
+                <input type="radio" name="sex" >male
+              </label>
+              <label>
+                <input type="radio" name="sex"  >female
+              </label>
+            </div>
+            <div class="form-group">
+              <label>个性签名</label>
+              <input type="text" class="form-control" name="slogan" />
+            </div>
+            <div class="form-group">
+              <label>邮箱</label>
+              <input type="text" class="form-control" name="email"  />
+            </div>
+            <div class="form-group">
+              <label>职业</label>
+              <input type="text" class="form-control" name="profession"  />
+            </div>
+            <div class="form-group">
+              <label>电话号码</label>
+              <input type="text" class="form-control" name="phone"  />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+        <button type="button" class="btn btn-default btn--close" data-dismiss="modal">关闭</button>
+        <button type="button" class="btn btn-info btn--save">保存</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- signin modal end -->
   
+  <!-- back ot top start-->
+    <a class="backToTop bg-info" href="#">
+      <span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span>
+    </a>
+  <!-- back ot top end -->
 </div>
-<%- include("footer",{url: 'home'}) %>
+<%- include("footer",{scripts: ['/js/home']}) %>

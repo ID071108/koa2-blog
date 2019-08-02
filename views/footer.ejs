@@ -7,8 +7,10 @@
     <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
     <script src="/js/common.js"></script>
     <!-- 加载当前页面的脚本 -->
-    <% if(url){ %>
-      <script src="/js/<%= url %>.js"></script>
+    <% if(scripts && scripts.length>0){ %>
+      <% scripts.forEach(function(script) { %>
+        <script src="<%= script %>.js"></script>
+     <% }) %>
     <% }%>
   </body>
 </html>
